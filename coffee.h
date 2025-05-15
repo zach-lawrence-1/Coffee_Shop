@@ -10,10 +10,10 @@
 class Coffee
 {
     protected:
-        std::string name;
-        std::string size;
-        std::string milk;
-        int price;
+        std::string m_name;
+        std::string m_size;
+        std::string m_milk;
+        int m_price;
 
     public:
         Coffee();
@@ -54,8 +54,8 @@ class Latte : public Coffee
 class Customer
 {
     private:
-        int walletMoney;
-        std::vector<std::unique_ptr<Coffee>> drinksOrdered;
+        int m_walletMoney;
+        std::vector<std::unique_ptr<Coffee>> m_drinksOrdered;
 
     public:
         Customer();
