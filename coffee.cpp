@@ -1,6 +1,6 @@
 #include "coffee.h"
 
-Coffee::Coffee() : name("Espresso"), size("Medium"), milk("None"), price(2) {};
+Coffee::Coffee() : m_name("Espresso"), m_size("Medium"), m_milk("None"), m_price(2) {};
 
 //TODO: add some kind of animation and timer
 void Coffee::brewCoffee()
@@ -14,34 +14,34 @@ void Coffee::brewCoffee()
 //TODO: add some kind of animation and timer
 void Coffee::addMilk()
 {
-    if (this->milk != "None")
-        std::cout << "Added " << this->milk << std::endl;
+    if (m_milk != "None")
+        std::cout << "Added " << m_milk << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 std::string Coffee::getSize()
 {
-    return this->size;
+    return m_size;
 }
 
 std::string Coffee::getMilkType()
 {
-    return this->milk;
+    return m_milk;
 }
 
 int Coffee::getPrice()
 {
-    return this->price;
+    return m_price;
 }
 
 void Coffee::setSize(const std::string &newSize)
 {
-    this->size = newSize;
+    m_size = newSize;
 }    
 
 void Coffee::setMilkType(const std::string &newMilkType)
 {
-    this->milk = newMilkType;
+    m_milk = newMilkType;
 }
 
 void Coffee::makeCoffee()
@@ -54,25 +54,25 @@ void Coffee::makeCoffee()
 
 std::ostream& operator<<(std::ostream &outputStream, const Coffee &coffeeObject)
 {
-    outputStream << std::endl << "===============" << std::endl << "Drink Type: " << coffeeObject.name <<
-    std::endl << "----------------" << std::endl << "Milk Type: " << coffeeObject.milk <<
-    std::endl << "---------------" << std::endl << "Drink Size: " << coffeeObject.size << 
-    std::endl << "---------------" << std::endl << "Drink price: " << coffeeObject.price <<
+    outputStream << std::endl << "===============" << std::endl << "Drink Type: " << coffeeObject.m_name <<
+    std::endl << "----------------" << std::endl << "Milk Type: " << coffeeObject.m_milk <<
+    std::endl << "---------------" << std::endl << "Drink Size: " << coffeeObject.m_size << 
+    std::endl << "---------------" << std::endl << "Drink price: " << coffeeObject.m_price <<
     std::endl << "===============" << std::endl;
     return outputStream;
 }
 
 Cappachino::Cappachino()
 {
-    this->name = "Cappachino";
-    this->milk = "Milk";
-    this->price = 4;
+    m_name = "Cappachino";
+    m_milk = "Milk";
+    m_price = 4;
 }
 
 //TODO: add some kind of animation and timer
 void Cappachino::steamMilk()
 {
-    if (this->milk != "None")
+    if (m_milk != "None")
     {
         std::cout << "Steaming milk" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -84,7 +84,7 @@ void Cappachino::steamMilk()
 //TODO: add some kind of animation and timer
 void Cappachino::frothMilk()
 {
-    if (this->milk != "None")
+    if (m_milk != "None")
     {
         std::cout << "frothing milk" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -105,15 +105,15 @@ void Cappachino::makeCoffee()
 
 Latte::Latte()
 {
-    this->name = "Latte";
-    this->milk = "Milk";
-    this->price = 3;
+    m_name = "Latte";
+    m_milk = "Milk";
+    m_price = 3;
 }
 
 //TODO: add some kind of animation and timer
 void Latte::steamMilk()
 {
-    if (this->milk != "None")
+    if (m_milk != "None")
     {
         std::cout << "Steaming milk" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -132,13 +132,13 @@ void Latte::makeCoffee()
     std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
-Customer::Customer() : walletMoney(9) {};
+Customer::Customer() : m_walletMoney(9) {};
 
 bool Customer::payForOrder(int cost)
 {
-    if (walletMoney >= cost)
+    if (m_walletMoney >= cost)
     {
-        walletMoney -= cost;
+        m_walletMoney -= cost;
         return true;
     }
     return false;
@@ -146,10 +146,10 @@ bool Customer::payForOrder(int cost)
 
 void Customer::printAllOrders()
 {
-    if (drinksOrdered.empty())
+    if (m_drinksOrdered.empty())
         std::cout << "No orders made yet, press any key..." << std::endl;
     
-    for (auto iter = drinksOrdered.begin(); iter != drinksOrdered.end(); iter++)
+    for (auto iter = m_drinksOrdered.begin(); iter != m_drinksOrdered.end(); iter++)
     {
         std::cout << (*(*iter));
     }
@@ -157,9 +157,9 @@ void Customer::printAllOrders()
 
 void Customer::printLastOrder()
 {
-    if (!drinksOrdered.empty())
+    if (!m_drinksOrdered.empty())
     {
-        auto drinkIterator = drinksOrdered.begin() + (drinksOrdered.size() - 1);
+        auto drinkIterator = m_drinksOrdered.begin() + (m_drinksOrdered.size() - 1);
         std::cout << "Last Order: " << std::endl << (*(*drinkIterator));
     }
     else
@@ -168,15 +168,15 @@ void Customer::printLastOrder()
 
 void Customer::addDrinkToOrders(std::unique_ptr<Coffee> &&drink)
 {
-    this->drinksOrdered.push_back(std::move(drink));
+    m_drinksOrdered.push_back(std::move(drink));
 }
 
 void Customer::addFunds(int moneyAmount)
 {
-    this->walletMoney += moneyAmount;
+    m_walletMoney += moneyAmount;
 }
 
 int Customer::getWalletMoney()
 {
-    return this->walletMoney;
+    return m_walletMoney;
 }
